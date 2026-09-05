@@ -1,135 +1,395 @@
 # 🛒 Full-Stack Type-Safe E-Commerce Platform
 
-A production-ready, high-performance e-commerce ecosystem built using **React, TypeScript, Node.js, Express, and PostgreSQL**, fully orchestrated via **Prisma ORM** and integrated with **Stripe**.
+A production-ready full-stack e-commerce platform built with **React, TypeScript, Node.js, Express.js, PostgreSQL, Prisma, and Stripe**.
 
-The platform features a decoupled architecture optimized for rapid loading times and global delivery, with the frontend edge-rendered on **Vercel** and the backend application layer hosted on **Render**.
+The application uses a decoupled frontend and backend architecture, with the storefront deployed on **Vercel** and the REST API deployed independently on **Render**.
 
 ---
 
 ## 🚀 Live Deployments
 
-- **⚡ Production Storefront (UI):** [https://vercel.app](https://vercel.app)
-- **⚙️ Production Engine (API):** [https://onrender.com](https://onrender.com)
+* ⚡ **Production Storefront:** https://ecommerce-platform-phi-one.vercel.app/
+* ⚙️ **Production API:** https://ecommerce-platform-7l9c.onrender.com
+* 💻 **GitHub Repository:** https://github.com/Mobin977/ecommerce-platform
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## ✨ Key Features
 
-### Frontend (Storefront UI)
+### 🛍️ Customer Features
 
-- **React 18 & TypeScript:** Strict components architecture ensuring type safety down the interface lifecycle.
-- **Vite:** Super-fast micro-bundler framework optimized for modern browser runtimes.
-- **Tailwind CSS:** Responsive, utility-first layout styling engine supporting crisp adaptive view grids.
+* User registration and login
+* Product browsing
+* Product search and filtering
+* Shopping cart
+* Wishlist
+* Checkout
+* Stripe payment integration
+* Order management
+* Order tracking
 
-### Backend (Application Server)
+### 👨‍💼 Admin Features
 
-- **Node.js & Express:** Lightweight, scalable, multi-endpoint rest routing pipeline.
-- **Prisma ORM:** Strong, compile-time database client type enforcement and auto-migration mapping.
-- **PostgreSQL:** Relational database cluster optimizing complex operations like nested ordering logic.
+* Admin authentication
+* Product management
+* Inventory management
+* Order management
+* Protected administrative routes
+* Role-based access control
 
-### Infrastructure & Security
+### 🔐 Security
 
-- **JWT & Bcrypt:** Secure credential hashing and stateful session tracking middleware.
-- **Stripe SDK:** E-commerce business logic mapping and secure payment intent creation.
+* JWT-based authentication
+* Bcrypt password hashing
+* Protected API endpoints
+* Role-based authorization
+* Environment-based secret management
+* No plaintext password storage
 
 ---
 
-## 📂 Project Repository Structure
+## 🏗️ Architecture
+
+```text
+                    ┌──────────────────────┐
+                    │   React + TypeScript  │
+                    │      Vite Frontend    │
+                    └──────────┬───────────┘
+                               │
+                               │ REST API
+                               ▼
+                    ┌──────────────────────┐
+                    │   Node.js + Express  │
+                    │      Backend API      │
+                    └──────────┬───────────┘
+                               │
+                         Prisma ORM
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      PostgreSQL      │
+                    │       Database       │
+                    └──────────────────────┘
+
+                               │
+                               ▼
+                         Stripe Payments
+```
+
+### ☁️ Deployment Architecture
+
+```text
+Customer
+   │
+   ▼
+Vercel
+React + Vite
+   │
+   │ HTTPS REST API
+   ▼
+Render
+Node.js + Express
+   │
+   ├──────────────► PostgreSQL
+   │
+   └──────────────► Stripe
+```
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
+
+* React 18
+* TypeScript
+* Vite
+* Tailwind CSS
+* Axios
+* Context API
+
+### Backend
+
+* Node.js
+* Express.js
+* TypeScript
+* JWT
+* Bcrypt
+* Stripe SDK
+
+### Database
+
+* PostgreSQL
+* Prisma ORM
+
+### Deployment
+
+* Vercel
+* Render
+
+---
+
+## 📂 Project Structure
 
 ```text
 ecommerce-platform/
-├── frontend/             # React SPA (Client Side Storefront UI)
+│
+├── frontend/
 │   ├── src/
-│   │   ├── components/   # Modular Cart, Admin Panel, Tracker elements
-│   │   ├── context/      # Global Authentication & Cart Data state logic
-│   │   └── pages/        # Auth & Store views
-│   └── vite.config.ts    # Custom micro-bundler specifications
-└── backend/              # Node.js REST API Server
-    ├── prisma/           # Data design models schema & seed files
-    └── src/
-        ├── controllers/  # Register & user validation processing functions
-        ├── middleware/   # Strict JWT session intercept routines
-        └── routes/       # Auth, Payment, and Catalog entry routers
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   └── ...
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── backend/
+│   ├── prisma/
+│   │   ├── schema.prisma
+│   │   └── seed.ts
+│   │
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   └── ...
+│   │
+│   └── package.json
+│
+└── README.md
 ```
 
 ---
 
-## ⚙️ Environment Variables Setup
+## ⚙️ Environment Variables
 
-### Backend Environment Configuration (`backend/.env`)
+### Backend
 
-Create a `.env` file inside your backend directory containing these parameters:
+Create:
+
+```text
+backend/.env
+```
+
+Example:
 
 ```env
-DATABASE_URL="postgresql://username:password@your-database-host:5432/dbname?sslmode=require"
-JWT_SECRET="your_cryptographically_secure_64_character_secret_string"
-STRIPE_SECRET_KEY="sk_test_your_private_stripe_developer_key"
-FRONTEND_URL="https://vercel.app"
+DATABASE_URL="your_postgresql_connection_string"
+JWT_SECRET="your_secure_jwt_secret"
+STRIPE_SECRET_KEY="your_stripe_secret_key"
+FRONTEND_URL="https://ecommerce-platform-phi-one.vercel.app"
 PORT=5000
 ```
 
-### Frontend Environment Configuration (`frontend/.env`)
+### Frontend
 
-Create a `.env` file inside your frontend directory containing this endpoint map:
+Create:
+
+```text
+frontend/.env
+```
+
+Example:
 
 ```env
-VITE_API_BASE_URL="https://onrender.com/api"
+VITE_API_BASE_URL="https://ecommerce-platform-7l9c.onrender.com/api"
+```
+
+> ⚠️ Never commit `.env` files, database credentials, Stripe secret keys, JWT secrets, or other sensitive information to GitHub.
+
+---
+
+## 📦 Local Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Mobin977/ecommerce-platform.git
+
+cd ecommerce-platform
 ```
 
 ---
 
-## 📦 Local Installation & Setup
-
-Follow these sequential steps to fire up the complete ecosystem on your local machine:
-
-### 1. Initialize and Seed the Database
-
-Ensure you have a local or cloud hosted PostgreSQL database server active, then configure the backend:
+### 2. Setup Backend
 
 ```bash
 cd backend
+
 npm install
+```
 
-# Push structural tables layouts to your active DB instance
+Configure your `.env` file and then run:
+
+```bash
 npx prisma db push
+```
 
-# Seed the catalog automatically with high-fidelity retail items
+Seed the database:
+
+```bash
 npx prisma db seed
+```
 
-# Run the local development hot-reloading loop
+Start the backend:
+
+```bash
 npm run dev
 ```
 
-### 2. Boot up the Frontend Client Storefront
+The API will run on:
 
-Open an independent terminal tab window and configure the client layer:
+```text
+http://localhost:5000
+```
+
+---
+
+### 3. Setup Frontend
+
+Open another terminal:
 
 ```bash
 cd frontend
-npm install
 
-# Fire up the secure, fast local development server
+npm install
 npm run dev
 ```
 
-Open your browser to `https://localhost:5173` to test the integrated platform setup.
+The frontend will normally be available at:
+
+```text
+http://localhost:5173
+```
+
+> Note: Use `http://localhost:5173` for the Vite development server unless HTTPS has specifically been configured.
 
 ---
 
-## 🔒 Implemented REST Endpoint Specifications
+## 🔌 REST API
 
-| HTTP Verb  | API Routing Endpoint                 | Authentication Middleware            | Access Target Node Routine                          |
-| :--------- | :----------------------------------- | :----------------------------------- | :-------------------------------------------------- |
-| **`POST`** | `/api/auth/register`                 | None (Open Access)                   | Create new user index with encrypted password       |
-| **`POST`** | `/api/auth/login`                    | None (Open Access)                   | Validate parameters and return signed session JWT   |
-| **`GET`**  | `/api/products`                      | None (Open Access)                   | Pull descending sorted storefront catalog data      |
-| **`POST`** | `/api/products/create`               | `authenticateToken` + `requireAdmin` | Restrictively ingest fresh retail inventory metrics |
-| **`POST`** | `/api/payment/create-payment-intent` | `authenticateToken`                  | Boot up Stripe session transaction references       |
+| Method | Endpoint                             | Authentication | Purpose                      |
+| ------ | ------------------------------------ | -------------- | ---------------------------- |
+| POST   | `/api/auth/register`                 | Public         | Register a new user          |
+| POST   | `/api/auth/login`                    | Public         | Authenticate user            |
+| GET    | `/api/products`                      | Public         | Retrieve products            |
+| POST   | `/api/products/create`               | Admin          | Create a product             |
+| POST   | `/api/payment/create-payment-intent` | Authenticated  | Create Stripe payment intent |
 
 ---
 
-## 🏆 Project Architecture Engineering Badges
+## 💳 Payment Flow
 
-- **End-to-End Type Safety:** Zero usage of `any` types across data query lines, reducing runtime errors.
-- **Strict Security Policies:** Passwords are never saved plain-text. JWT token access controls protect backend administrative updates.
-- **Optimized Cloud Scaling:** Distributed system orchestration separating user traffic pipelines from heavy database engines.
+```text
+Customer
+   │
+   ▼
+Add Products
+   │
+   ▼
+Cart
+   │
+   ▼
+Checkout
+   │
+   ▼
+Backend API
+   │
+   ▼
+Stripe Payment Intent
+   │
+   ▼
+Payment Confirmation
+   │
+   ▼
+Order Created
+```
+
+---
+
+## 🔒 Security
+
+The application implements:
+
+* JWT authentication
+* Role-based authorization
+* Protected API routes
+* Bcrypt password hashing
+* Environment-based secret management
+* Database constraints
+* Server-side authorization checks
+
+Passwords are never stored in plaintext.
+
+---
+
+## 📸 Screenshots
+
+Add screenshots of your actual application here.
+
+### 🏠 Storefront
+
+*Add screenshot here*
+
+### 🛍️ Product Details
+
+*Add screenshot here*
+
+### 🛒 Shopping Cart
+
+*Add screenshot here*
+
+### 💳 Checkout
+
+*Add screenshot here*
+
+### 👨‍💼 Admin Dashboard
+
+*Add screenshot here*
+
+---
+
+## 🏆 Engineering Highlights
+
+This project demonstrates practical experience with:
+
+* Full-stack application architecture
+* TypeScript development
+* REST API design
+* JWT authentication
+* Role-based access control
+* PostgreSQL database design
+* Prisma ORM
+* Stripe payment integration
+* State management
+* Secure environment configuration
+* Independent frontend/backend deployment
+* Cloud deployment and production debugging
+
+---
+
+## 🚀 Future Improvements
+
+* Redis caching
+* Automated testing
+* CI/CD with GitHub Actions
+* Product image storage
+* Advanced search
+* Email notifications
+* Inventory alerts
+* Order analytics
+* AWS deployment
+
+---
+
+## 👨‍💻 Author
+
+**Mobin977**
+
+Full-Stack Developer building production-ready applications with:
+
+**React • TypeScript • Node.js • Express.js • PostgreSQL • Prisma • Redis • Docker**
+
+---
+
+⭐ If you find this project useful, consider giving the repository a star.
