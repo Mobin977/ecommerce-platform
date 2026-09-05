@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react'; // FIXED: Removed unused 'React' global to satisfy strict compilation rules
 import { useAuth } from './context/AuthContext';
 import { useCart } from './context/CartContext';
 import { AuthPage } from './pages/AuthPage';
