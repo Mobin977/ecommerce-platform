@@ -2,9 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "prisma:generate": "prisma generate",
+    "build": "prisma generate && tsc",
     "start": "node dist/index.js",
     "dev": "nodemon --watch src --ext ts --exec npx tsx src/index.ts"
   },
@@ -13,24 +14,24 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "@types/bcrypt": "^6.0.0",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^26.4.1",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "stripe": "^22.6.1",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^7.0.2"
+    "stripe": "^22.6.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.4.1",
     "nodemon": "^3.1.14",
     "prisma": "^5.22.0",
     "ts-node": "^10.9.2",
-    "tsx": "^4.23.13"
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
