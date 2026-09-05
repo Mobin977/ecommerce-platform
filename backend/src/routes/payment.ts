@@ -1,19 +1,20 @@
-const { Router } = require('express');
-const Stripe = require('stripe');
-const { authenticateToken } = require('../middleware/auth');
+import { Router, Response } from 'express';
+import Stripe from 'stripe';
+import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-10-16',
+  apiVersion: '2023-10-16' as any, 
 });
 
-router.post('/create-payment-intent', authenticateToken, async (req: any, res: any): Promise<any> => {
+router.post('/create-payment-intent', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { amount } = req.body;
-    const userId = req.user?.userId;
+    const userId = req.user?.userId; // Perfectly matches your AuthRequest signature
 
     if (!amount || amount <= 0) {
-      return res.status(400).json({ error: 'Invalid monetary sum parameters.' });
+      res.status(400).json({ error: 'Invalid monetary sum parameters.' });
+      return;
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -23,10 +24,10 @@ router.post('/create-payment-intent', authenticateToken, async (req: any, res: a
       metadata: { userId: userId || 'anonymous' },
     });
 
-    return res.json({ clientSecret: paymentIntent.client_secret });
+    res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error: any) {
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
-module.exports = router;
+export default router;
